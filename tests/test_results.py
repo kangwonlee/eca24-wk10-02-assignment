@@ -106,6 +106,25 @@ def test_result_0_type(result_dict_0:RESULT):
     )
 
 
+def test_result_1_type(result_dict_1:RESULT):
+    assert isinstance(result_dict_1, dict), (
+        "returned result is not a `dict`\n"
+        "반환된 결과가 `dict`가 아님\n"
+        f"{result_dict_1}"
+    )
+
+    assert 'a_array_1' in result_dict_1, (
+        "returned result does not have `a_array_1`\n"
+        "반환값에 `a_array_1`가 없음\n"
+        f"{result_dict_1}"
+    )
+    assert 'area_1' in result_dict_1, (
+        "returned result does not have `area_1`\n"
+        "반환값에 `area_1`가 없음\n"
+        f"{result_dict_1}"
+    )
+
+
 @pytest.fixture
 def result_a_array_0(result_dict_0:RESULT) -> np.ndarray:
     return result_dict_0['a_array_0']
