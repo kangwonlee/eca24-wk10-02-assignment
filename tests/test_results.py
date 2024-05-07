@@ -76,10 +76,10 @@ def result_dict(x1_rad, x2_rad, n_rect) -> RESULT:
 
 
 def test_result_type(result_dict:RESULT):
-    assert isinstance(result_dict, dict), "returned result is not a `dict`\n반환된 결과가 `dict`가 아님"
+    assert isinstance(result_dict, dict), f"returned result is not a `dict`\n반환된 결과가 `dict`가 아님\n{result_dict}"
 
-    assert 'a_array_0' in result_dict, "returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음"
-    assert 'area_0' in result_dict, "returned result does not have `area_0`\n반환값에 `area_0`가 없음"
+    assert 'a_array_0' in result_dict, f"returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음\n{result_dict}"
+    assert 'area_0' in result_dict, f"returned result does not have `area_0`\n반환값에 `area_0`가 없음\n{result_dict}"
 
 
 @pytest.fixture
