@@ -58,8 +58,18 @@ def n_rect(x1_deg:int, x2_deg:int) -> int:
 
 
 @pytest.fixture
-def x_deg_array(x1_deg:int, x2_deg:int, n_rect:int) -> np.ndarray:
-    return np.linspace(x1_deg, x2_deg, (n_rect+1))[:-1]
+def x_deg_array2(x1_deg:int, x2_deg:int, n_rect:int) -> np.ndarray:
+    return np.linspace(x1_deg, x2_deg, (n_rect+1))
+
+
+@pytest.fixture
+def x_deg_array(x_deg_array2) -> np.ndarray:
+    return x_deg_array2[:-1]
+
+
+@pytest.fixture
+def x_rad_array2(x_deg_array2:np.ndarray) -> np.ndarray:
+    return np.deg2rad(x_deg_array2)
 
 
 @pytest.fixture
@@ -73,25 +83,37 @@ def delta_x_rad(x_rad_array:np.ndarray) -> float:
 
 
 @pytest.fixture
-def result_dict(x1_rad, x2_rad, n_rect) -> RESULT:
+def result_dict_0(x1_rad, x2_rad, n_rect) -> RESULT:
     return main.int_cos_0(x1_rad, x2_rad, n_rect)
 
 
-def test_result_type(result_dict:RESULT):
-    assert isinstance(result_dict, dict), f"returned result is not a `dict`\n반환된 결과가 `dict`가 아님\n{result_dict}"
+def test_result_type(result_dict_0:RESULT):
+    assert isinstance(result_dict_0, dict), (
+        "returned result is not a `dict`\n"
+        "반환된 결과가 `dict`가 아님\n"
+        f"{result_dict_0}"
+    )
 
-    assert 'a_array_0' in result_dict, f"returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음\n{result_dict}"
-    assert 'area_0' in result_dict, f"returned result does not have `area_0`\n반환값에 `area_0`가 없음\n{result_dict}"
+    assert 'a_array_0' in result_dict_0, (
+        "returned result does not have `a_array_0`\n"
+        "반환값에 `a_array_0`가 없음\n"
+        f"{result_dict_0}"
+    )
+    assert 'area_0' in result_dict_0, (
+        "returned result does not have `area_0`\n"
+        "반환값에 `area_0`가 없음\n"
+        f"{result_dict_0}"
+    )
 
 
 @pytest.fixture
-def result_a_array_0(result_dict:RESULT) -> np.ndarray:
-    return result_dict['a_array_0']
+def result_a_array_0(result_dict_0:RESULT) -> np.ndarray:
+    return result_dict_0['a_array_0']
 
 
 @pytest.fixture
-def result_area_0(result_dict:RESULT) -> float:
-    return result_dict['area_0']
+def result_area_0(result_dict_0:RESULT) -> float:
+    return result_dict_0['area_0']
 
 
 def test_rect_type(result_a_array_0:np.ndarray):
