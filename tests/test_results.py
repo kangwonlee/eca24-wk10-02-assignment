@@ -4,7 +4,7 @@ import random
 import sys
 
 
-from typing import Dict, Union
+from typing import Callable, Dict, Union
 
 
 import numpy as np
@@ -13,6 +13,7 @@ import pytest
 
 
 RESULT = Dict[str, Union[float, np.ndarray]]
+METHOD = Callable[[float, float, int], RESULT]
 
 
 file_path = pathlib.Path(__file__)
@@ -82,65 +83,37 @@ def delta_x_rad(x_rad_array:np.ndarray) -> float:
     return x_rad_array[1] - x_rad_array[0]
 
 
+@pytest.fixture(params=[main.int_cos_0, main.int_cos_1, main.int_cos_2])
+def int_method(request):
+    return request.param
+
+
 @pytest.fixture
-def result_dict_0(x1_rad, x2_rad, n_rect) -> RESULT:
-    return main.int_cos_0(x1_rad, x2_rad, n_rect)
+def method_number(int_method:METHOD) -> str:
+    return int_method.__name__[-1]
 
 
-def test_result_0_type(result_dict_0:RESULT):
-    assert isinstance(result_dict_0, dict), (
+@pytest.fixture
+def result_dict(int_method:METHOD, x1_rad:float, x2_rad:float, n_rect:int) -> RESULT:
+    return int_method(x1_rad, x2_rad, n_rect)
+
+
+def test_result_type(result_dict:RESULT,):
+    assert isinstance(result_dict, dict), (
         "returned result is not a `dict`\n"
         "반환된 결과가 `dict`가 아님\n"
-        f"{result_dict_0}"
-    )
-
-    assert 'a_array_0' in result_dict_0, (
-        "returned result does not have `a_array_0`\n"
-        "반환값에 `a_array_0`가 없음\n"
-        f"{result_dict_0}"
-    )
-    assert 'area_0' in result_dict_0, (
-        "returned result does not have `area_0`\n"
-        "반환값에 `area_0`가 없음\n"
-        f"{result_dict_0}"
+        f"{result_dict}"
     )
 
 
-def test_result_1_type(result_dict_1:RESULT):
-    assert isinstance(result_dict_1, dict), (
-        "returned result is not a `dict`\n"
-        "반환된 결과가 `dict`가 아님\n"
-        f"{result_dict_1}"
-    )
+@pytest.mark.parametrize("dict_key_prefix", ["a_array", "area"])
+def test_result_has_key(result_dict:RESULT, dict_key_prefix:str, method_number:str,):
+    dict_key = '_'.join((dict_key_prefix, method_number))
 
-    assert 'a_array_1' in result_dict_1, (
-        "returned result does not have `a_array_1`\n"
-        "반환값에 `a_array_1`가 없음\n"
-        f"{result_dict_1}"
-    )
-    assert 'area_1' in result_dict_1, (
-        "returned result does not have `area_1`\n"
-        "반환값에 `area_1`가 없음\n"
-        f"{result_dict_1}"
-    )
-
-
-def test_result_2_type(result_dict_2:RESULT):
-    assert isinstance(result_dict_2, dict), (
-        "returned result is not a `dict`\n"
-        "반환된 결과가 `dict`가 아님\n"
-        f"{result_dict_2}"
-    )
-
-    assert 'a_array_2' in result_dict_2, (
-        "returned result does not have `a_array_2`\n"
-        "반환값에 `a_array_2`가 없음\n"
-        f"{result_dict_2}"
-    )
-    assert 'area_2' in result_dict_2, (
-        "returned result does not have `area_2`\n"
-        "반환값에 `area_2`가 없음\n"
-        f"{result_dict_2}"
+    assert dict_key in result_dict, (
+        f"returned result does not have `{dict_key}`\n"
+        f"반환값에 `{dict_key}`가 없음\n"
+        f"{result_dict}"
     )
 
 
