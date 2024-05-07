@@ -137,12 +137,44 @@ def test_compare_int_cos_type(result_compare_int_cos:RESULT):
     assert 'is_close' in result_compare_int_cos, "returned result does not have `is_close`\n반환값에 `is_close`가 없음"
 
     assert isinstance(result_compare_int_cos['area_0'], float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
-    assert isinstance(result_compare_int_cos['area_exact'], float), "returned result 'area_exact' is not an instance of `float`\n반환된 결과 'area_exact'가 `float`가 아님"
+
+
+@pytest.fixture
+def result_compare_numint(result_compare_int_cos:RESULT) -> float:
+    return result_compare_int_cos['area_0']
+
+
+def test_compare_int_cos__numint_type(result_compare_numint:float):
+    assert isinstance(result_compare_numint, float), (
+        f"returned result 'area_0' ({result_compare_numint}) is not an instance of `float`\n"
+        f"반환된 결과 'area_exact' ({result_compare_numint}) 가 `float`가 아님"
+    )
+
+
+def test_compare_int_cos__numint(result_compare_numint:float, result_area_0:float):
+    assert result_compare_numint == result_area_0, (
+        f"'area_0' of compare_int_cos() ({result_compare_numint}) is not same as int_cos_0() ({result_area_0}) \n"
+        f"compare_int_cos() 가 반환된 결과 'area_exact' ({result_compare_numint}) 가 int_cos_0() 반환 결과 ({result_area_0}) 와 다름"
+    )
+
+
+def test_compare_int_cos_area_exact(x1_deg:int, x2_deg:int, result_area_exact:float, expected_exact_int:float):
+    assert math.isclose(result_area_exact, expected_exact_int), (
+        f"please verify exact integration result ({x1_deg:d}deg~{x2_deg:d}deg returned : {result_area_exact:f}, expected : {expected_exact_int:f})\n"
+        f"정적분 이론값 확인 바랍니다  ({x1_deg:d}deg~{x2_deg:d}deg 반환값 : {result_area_exact:f}, 예상값 : {expected_exact_int:f})"
+    )
 
 
 @pytest.fixture
 def result_area_exact(result_compare_int_cos:RESULT) -> float:
     return result_compare_int_cos['area_exact']
+
+
+def test_compare_int_cos_area_exact_type(result_area_exact:float):
+    assert isinstance(result_area_exact, float), (
+        f"returned result 'area_exact' ({result_area_exact}) is not an instance of `float`\n"
+        f"반환된 결과 'area_exact' ({result_area_exact}) 가 `float`가 아님"
+    )
 
 
 def test_compare_int_cos_area_exact(x1_deg:int, x2_deg:int, result_area_exact:float, expected_exact_int:float):
