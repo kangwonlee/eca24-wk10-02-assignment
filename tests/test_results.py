@@ -61,7 +61,7 @@ def delta_x_rad(x_rad_array:np.ndarray) -> float:
 
 @pytest.fixture
 def result_dict(x_rad_array) -> RESULT:
-    return main.int_sin_0(x_rad_array)
+    return main.int_cos_0(x_rad_array)
 
 
 def test_result_type(result_dict:RESULT):
