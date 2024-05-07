@@ -52,7 +52,9 @@ def x2_rad(x2_deg:int) -> float:
 @pytest.fixture
 def n_rect(x1_deg:int, x2_deg:int) -> int:
     n = x2_deg - x1_deg
-    return random.randint(n//2, 2*n)
+    result = random.randint(n//2, 2*n)
+    result += (result % 2)
+    return result
 
 
 @pytest.fixture
