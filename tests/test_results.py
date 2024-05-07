@@ -74,7 +74,7 @@ def test_result_type(result_dict:RESULT):
 
 
 def test_rect_type(result_a_array:nd.ndarray):
-    assert isinstance(result_dict, nd.ndarray), "returned result is not a `nd.ndarray`\n반환된 결과가 `nd.ndarray`가 아님"
+    assert isinstance(result_a_array, nd.ndarray), "returned result is not a `nd.ndarray`\n반환된 결과가 `nd.ndarray`가 아님"
 
 
 def test_area_type(result_area:float):
