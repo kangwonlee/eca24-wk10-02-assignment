@@ -57,39 +57,39 @@ def result_dict(x_rad_array) -> RESULT:
     return main.int_sin_0(x_rad_array)
 
 
+def test_result_type(result_dict:RESULT):
+    assert isinstance(result_dict, dict), "returned result is not a `dict`\n반환된 결과가 `dict`가 아님"
+
+    assert 'a_array_0' in result_dict, "returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음"
+    assert 'area_0' in result_dict, "returned result does not have `area_0`\n반환값에 `area_0`가 없음"
+
+
 @pytest.fixture
 def result_a_array_0(result_dict:RESULT) -> nd.ndarray:
     return result_dict['a_array_0']
 
 
 @pytest.fixture
-def result_area(result_dict:RESULT) -> float:
-    return result_dict['area']
-
-
-def test_result_type(result_dict:RESULT):
-    assert isinstance(result_dict, dict), "returned result is not a `dict`\n반환된 결과가 `dict`가 아님"
-
-    assert 'a_array_0' in result_dict, "returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음"
-    assert 'area' in result_dict, "returned result does not have `area`\n반환값에 `area`가 없음"
+def result_area_0(result_dict:RESULT) -> float:
+    return result_dict['area_0']
 
 
 def test_rect_type(result_a_array_0:nd.ndarray):
-    assert isinstance(result_a_array_0, nd.ndarray), "returned result is not a `nd.ndarray`\n반환된 결과가 `nd.ndarray`가 아님"
+    assert isinstance(result_a_array_0, nd.ndarray), "returned result 'a_array_0' is not an instance of `nd.ndarray`\n반환된 결과 'a_array_0' 가 `nd.ndarray`가 아님"
 
 
-def test_area_type(result_area:float):
-    assert isinstance(result_area, float), "returned result is not a `float`\n반환된 결과가 `float`가 아님"
+def test_area_0_type(result_area_0:float):
+    assert isinstance(result_area_0, float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
 
 
 def test_rect_value(result_a_array_0:nd.ndarray, x_rad_array:nd.array, delta_x:float):
     q = result_a_array_0 * (1.0/delta_x)
     expected_q = np.sin(x_rad_array)
-    np.assert_allclose(q, expected_q)
+    np.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
 
 
-def test_area_value(result_area:float, delta_x:float):
-    q = result_area / delta_x
+def test_area_0_value(result_area_0:float, delta_x:float):
+    q = result_area_0 * (1.0/delta_x)
     expected_q = np.sum(np.sin(x_rad_array))
     assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
 

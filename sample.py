@@ -21,7 +21,7 @@ def sample_main():
     rect_i = result_0['a_array_0'][i]
     print(f"area at x = {x_i} deg is {rect_i}")
 
-    print(f"numerical integration result is {result_0['area']}")
+    print(f"numerical integration result is {result_0['area_0']}")
 
 
 if "__main__" == __name__:
