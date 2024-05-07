@@ -7,9 +7,9 @@
 
 ## Implementation<br>구현
 
-* Implement `int_sin()` function in `main.py` file.<br>`int_sin()` 함수를 `main.py` 파일에 구현하시오.
+* Implement `int_sin_0()` function in `main.py` file.<br>`int_sin_0()` 함수를 `main.py` 파일에 구현하시오.
 * Please see `sample.py` file for an example.<br>사용 예에 대해서는 `sample.py` 파일을 참고하시오.
-* Arguments of function `int_sin()` has one argument : `numpy` array `x_array`.<br>함수 `int_sin()` 의 매개변수는 `numpy` 배열 `x_array` 이다.
+* Arguments of function `int_sin_0()` has one argument : `numpy` array `x_array`.<br>함수 `int_sin_0()` 의 매개변수는 `numpy` 배열 `x_array` 이다.
 
 | argument<br>매개변수 | type<br>형 | unit<br>단위 | description<br>설명 |
 |:-----------------:|:----------:|:----------:|:------------------:|

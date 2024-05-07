@@ -14,7 +14,7 @@ def sample_main():
     x_deg_array = np.arange(x1_deg, x2_deg, delta_x)
     x_rad_array = np.deg2rad(x_deg_array)
 
-    d = main.int_sin(x_rad_array)
+    d = main.int_sin_0(x_rad_array)
 
     i = random.randint(0, len(x_deg_array)-1)
     x_i = x_deg_array[i]

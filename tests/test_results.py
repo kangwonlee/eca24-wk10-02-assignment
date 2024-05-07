@@ -54,7 +54,7 @@ def x_rad_array(x_deg_array:np.ndarray) -> np.ndarray:
 
 @pytest.fixture
 def result_dict(x_rad_array) -> RESULT:
-    return main.int_sin(x_rad_array)
+    return main.int_sin_0(x_rad_array)
 
 
 @pytest.fixture
