@@ -3,12 +3,14 @@ import pathlib
 import random
 import sys
 
+
 from typing import Dict, Union
 
 
 import numpy as np
 import numpy.testing as nt
 import pytest
+
 
 RESULT = Dict[str, Union[float, np.ndarray]]
 
@@ -38,18 +40,23 @@ def x2_deg() -> float:
 
 
 @pytest.fixture
-def delta_x() -> float:
+def delta_x_deg() -> float:
     return random.uniform(0.1, 1.9)
 
 
 @pytest.fixture
-def x_deg_array(x1_deg:int, x2_deg:int, delta_x:float) -> np.ndarray:
-    return np.arange(x1_deg, x2_deg, delta_x)
+def x_deg_array(x1_deg:int, x2_deg:int, delta_x_deg:float) -> np.ndarray:
+    return np.arange(x1_deg, x2_deg, delta_x_deg)
 
 
 @pytest.fixture
 def x_rad_array(x_deg_array:np.ndarray) -> np.ndarray:
     return np.deg2rad(x_deg_array)
+
+
+@pytest.fixture
+def delta_x_rad(x_rad_array:np.ndarray) -> float:
+    return x_rad_array[1] - x_rad_array[0]
 
 
 @pytest.fixture
@@ -82,15 +89,16 @@ def test_area_0_type(result_area_0:float):
     assert isinstance(result_area_0, float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
 
 
-def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x:float):
-    q = result_a_array_0 * (1.0/delta_x)
+def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float):
+    q = result_a_array_0 * (1.0/delta_x_rad)
     expected_q = np.sin(x_rad_array)
     nt.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
 
 
-def test_area_0_value(result_area_0:float, delta_x:float):
-    q = result_area_0 * (1.0/delta_x)
-    expected_q = np.sum(np.sin(x_rad_array))
+def test_area_0_value(result_area_0:float, delta_x_rad:float, x_rad_array:np.ndarray):
+    q = result_area_0 * (1.0/delta_x_rad)
+    expected_qq = np.sin(x_rad_array)
+    expected_q = np.sum(expected_qq)
     assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
 
 
