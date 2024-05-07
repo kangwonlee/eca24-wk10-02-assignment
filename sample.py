@@ -23,10 +23,8 @@ def sample_main():
 
     print(f"numerical integration result is {result_0['area_0']}")
 
-    exact = main.exact_int_cos(x1_rad, x2_rad)
-
-    print(f"exact integration result is {exact}")
-    print(f"error is {exact - result_0['area_0']}")
+    epsilon = 1e-6
+    print(main.compare_int_cos(x1_rad, x2_rad, n, epsilon))
 
 
 if "__main__" == __name__:
