@@ -9,17 +9,17 @@ def sample_main():
     x1_deg = 0
     x2_deg = 360
 
-    delta_x = random.uniform(0.5, 1.5)
+    x1_rad, x2_rad = np.deg2rad(x1_deg), np.deg2rad(x2_deg)
 
-    x_deg_array = np.arange(x1_deg, x2_deg, delta_x)
-    x_rad_array = np.deg2rad(x_deg_array)
+    n = random.randint(100, 300)
 
-    result_0 = main.int_cos_0(x_rad_array)
+    result_0 = main.int_cos_0(x1_rad, x2_rad, n)
 
-    i = random.randint(0, len(x_deg_array)-1)
-    x_i = x_deg_array[i]
+    a_array = result_0['a_array_0']
+    i = random.randint(0, len(a_array)-1)
     rect_i = result_0['a_array_0'][i]
-    print(f"area at x = {x_i} deg is {rect_i}")
+
+    print(f"area of rect #{i} is {rect_i}")
 
     print(f"numerical integration result is {result_0['area_0']}")
 
