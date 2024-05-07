@@ -1,9 +1,9 @@
 
-# Integrating $cos\theta$ instead of $sin \theta$<br>$sin \theta$ 대신 $cos \theta$ 적분
+# Integrating $cos\theta$ (instead of $sin \theta$) using 0th order<br>0차 적분을 이용한 ($sin \theta$ 대신) $cos \theta$ 적분
 
 ## Description<br>설명
 
-* Using numerical integration of 0th order, please integrate a period of $cos \theta$ (instead of $sin \theta$ in the video).<br>0차 수치 적분을 사용하여 (비디오에서는 $sin \theta$ 였지만) $cos \theta$의 한 주기를 적분하시오.
+* Using numerical integration of 0th order, please calculate definite integral of $cos \theta$ (instead of $sin \theta$ in the video).<br>0차 수치 적분을 사용하여 (비디오에서는 $sin \theta$ 였지만) $cos \theta$의 정적분을 계산하시오.
 
 ## Implementation<br>구현
 
