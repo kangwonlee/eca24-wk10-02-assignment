@@ -65,7 +65,7 @@ def test_result_type(result_dict:RESULT):
 
 
 @pytest.fixture
-def result_a_array_0(result_dict:RESULT) -> nd.ndarray:
+def result_a_array_0(result_dict:RESULT) -> np.ndarray:
     return result_dict['a_array_0']
 
 
@@ -74,15 +74,15 @@ def result_area_0(result_dict:RESULT) -> float:
     return result_dict['area_0']
 
 
-def test_rect_type(result_a_array_0:nd.ndarray):
-    assert isinstance(result_a_array_0, nd.ndarray), "returned result 'a_array_0' is not an instance of `nd.ndarray`\n반환된 결과 'a_array_0' 가 `nd.ndarray`가 아님"
+def test_rect_type(result_a_array_0:np.ndarray):
+    assert isinstance(result_a_array_0, np.ndarray), "returned result 'a_array_0' is not an instance of `np.ndarray`\n반환된 결과 'a_array_0' 가 `np.ndarray`가 아님"
 
 
 def test_area_0_type(result_area_0:float):
     assert isinstance(result_area_0, float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
 
 
-def test_rect_value(result_a_array_0:nd.ndarray, x_rad_array:nd.array, delta_x:float):
+def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x:float):
     q = result_a_array_0 * (1.0/delta_x)
     expected_q = np.sin(x_rad_array)
     np.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
