@@ -7,6 +7,7 @@ from typing import Dict, Union
 
 
 import numpy as np
+import numpy.testing as nt
 import pytest
 
 RESULT = Dict[str, Union[float, np.ndarray]]
@@ -79,6 +80,18 @@ def test_rect_type(result_a_array:nd.ndarray):
 
 def test_area_type(result_area:float):
     assert isinstance(result_area, float), "returned result is not a `float`\n반환된 결과가 `float`가 아님"
+
+
+def test_rect_value(result_a_array:nd.ndarray, x_rad_array:nd.array, delta_x:float):
+    q = result_a_array * (1.0/delta_x)
+    expected_q = np.sin(x_rad_array)
+    np.assert_allclose(q, expected_q)
+
+
+def test_area_value(result_area:float, delta_x:float):
+    q = result_area / delta_x
+    expected_q = np.sum(np.sin(x_rad_array))
+    assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
 
 
 if "__main__" == __name__:
