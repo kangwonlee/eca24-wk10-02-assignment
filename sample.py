@@ -1,18 +1,23 @@
-import scipy.stats
+import random
+import numpy as np
+
 
 import main
 
 
-def f(x, ave=1.0, std=0.1):
-    return scipy.stats.norm.pdf(x, loc=ave, scale=std)
-
-
 def sample_main():
-    x1 = 0.9
-    x2 = 1.1
+    x1_deg = 0
+    x2_deg = 360
 
-    p = main.probability_between(f, 0.9, 1.1)
-    print(f"probability that x is between {x1} and {x2} will be {p:.4f}")
+    x_deg_array = np.arange(x1_deg, x2_deg)
+    x_rad_array = np.deg2rad(x_deg_array)
+
+    d = main.int_sin(x_rad_array)
+
+    i = random.choice(x_deg_array)
+    print(f"area at x = {i} deg is {d['a_array'][int(i)]}")
+
+    print(f"numerical integration result is {d['area']}")
 
 
 if "__main__" == __name__:
