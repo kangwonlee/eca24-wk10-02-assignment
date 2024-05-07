@@ -40,13 +40,24 @@ def x2_deg() -> float:
 
 
 @pytest.fixture
-def delta_x_deg() -> float:
-    return random.uniform(0.1, 1.9)
+def x1_rad(x1_deg:int) -> float:
+    return math.radians(x1_deg)
 
 
 @pytest.fixture
-def x_deg_array(x1_deg:int, x2_deg:int, delta_x_deg:float) -> np.ndarray:
-    return np.arange(x1_deg, x2_deg, delta_x_deg)
+def x2_rad(x2_deg:int) -> float:
+    return math.radians(x2_deg)
+
+
+@pytest.fixture
+def n_rect(x1_deg:int, x2_deg:int) -> int:
+    n = x2_deg - x1_deg
+    return random.randint(n//2, 2*n)
+
+
+@pytest.fixture
+def x_deg_array(x1_deg:int, x2_deg:int, n_rect:int) -> np.ndarray:
+    return np.linspace(x1_deg, x2_deg, (n_rect+1))[:-1]
 
 
 @pytest.fixture
@@ -60,8 +71,8 @@ def delta_x_rad(x_rad_array:np.ndarray) -> float:
 
 
 @pytest.fixture
-def result_dict(x_rad_array) -> RESULT:
-    return main.int_cos_0(x_rad_array)
+def result_dict(x1_rad, x2_rad, n_rect) -> RESULT:
+    return main.int_cos_0(x1_rad, x2_rad, n_rect)
 
 
 def test_result_type(result_dict:RESULT):
@@ -91,13 +102,13 @@ def test_area_0_type(result_area_0:float):
 
 def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float):
     q = result_a_array_0 * (1.0/delta_x_rad)
-    expected_q = np.sin(x_rad_array)
+    expected_q = np.cos(x_rad_array)
     nt.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
 
 
 def test_area_0_value(result_area_0:float, delta_x_rad:float, x_rad_array:np.ndarray):
     q = result_area_0 * (1.0/delta_x_rad)
-    expected_qq = np.sin(x_rad_array)
+    expected_qq = np.cos(x_rad_array)
     expected_q = np.sum(expected_qq)
     assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
 
