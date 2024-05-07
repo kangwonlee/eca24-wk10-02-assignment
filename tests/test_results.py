@@ -133,7 +133,7 @@ def test_compare_int_cos_type(result_compare_int_cos:RESULT):
 
     assert 'area_0' in result_compare_int_cos, "returned result does not have `area_0`\n반환값에 `area_0`가 없음"
     assert 'area_exact' in result_compare_int_cos, "returned result does not have `area_exact`\n반환값에 `area_exact`가 없음"
-    assert 'diff' in result_compare_int_cos, "returned result does not have `diff`\n반환값에 `diff`가 없음"
+    assert 'diff_0' in result_compare_int_cos, "returned result does not have `diff_0`\n반환값에 `diff_0`가 없음"
     assert 'is_close' in result_compare_int_cos, "returned result does not have `is_close`\n반환값에 `is_close`가 없음"
 
     assert isinstance(result_compare_int_cos['area_0'], float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
@@ -186,15 +186,15 @@ def test_compare_int_cos_area_exact(x1_deg:int, x2_deg:int, result_area_exact:fl
 
 @pytest.fixture
 def result_diff(result_compare_int_cos:RESULT) -> float:
-    return result_compare_int_cos['diff']
+    return result_compare_int_cos['diff_0']
 
 
 def test_result_diff_type(result_diff:float):
-    assert isinstance(result_diff, float), "returned result 'diff' is not an instance of `float`\n반환된 결과 'diff'가 `float`가 아님"
+    assert isinstance(result_diff, float), "returned result 'diff_0' is not an instance of `float`\n반환된 결과 'diff_0'가 `float`가 아님"
 
     assert result_diff >= 0, (
-        f"returned result 'diff' {result_diff} is supposed to be an absolute value.\n"
-        f"반환된 결과 'diff' {result_diff} 는 절대값이어야 함."
+        f"returned result 'diff_0' {result_diff} is supposed to be an absolute value.\n"
+        f"반환된 결과 'diff_0' {result_diff} 는 절대값이어야 함."
     )
 
 
@@ -212,8 +212,8 @@ def test_result_is_close_type(result_is_close:bool):
 
 @pytest.fixture
 def expected_diff_div_delta_x(expected_exact_int:float, delta_x_rad:float, x_rad_array:np.ndarray) -> float:
-    # diff = exact - numerical
-    # diff / delta_x = exact / delta_x - numerical / delta_x
+    # diff_0 = exact - numerical
+    # diff_0 / delta_x = exact / delta_x - numerical / delta_x
     expected_exact_int_div_delta_x = expected_exact_int / delta_x_rad
     expected_qq = np.cos(x_rad_array)
     expected_q = np.sum(expected_qq)
@@ -230,8 +230,8 @@ def test_compare_int_cos_diff(
     expected_diff = expected_diff_div_delta_x * delta_x_rad
 
     assert math.isclose(result_diff, expected_diff), (
-        f"please verify `diff` (result : {result_diff}, expected : {expected_diff}).\n"
-        f"`diff` 값을 확인 바람. (반환된 값 : {result_diff}, 예상된 값 : {expected_diff})"
+        f"please verify `diff_0` (result : {result_diff}, expected : {expected_diff}).\n"
+        f"`diff_0` 값을 확인 바람. (반환된 값 : {result_diff}, 예상된 값 : {expected_diff})"
     )
 
 
