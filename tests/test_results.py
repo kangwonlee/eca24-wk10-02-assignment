@@ -14,6 +14,7 @@ import pytest
 
 RESULT = Dict[str, Union[float, np.ndarray]]
 METHOD = Callable[[float, float, int], RESULT]
+TABLE = Dict[str, np.array]
 
 
 file_path = pathlib.Path(__file__)
@@ -74,13 +75,22 @@ def x_rad_array2(x_deg_array2:np.ndarray) -> np.ndarray:
 
 
 @pytest.fixture
-def x_rad_array(x_deg_array:np.ndarray) -> np.ndarray:
-    return np.deg2rad(x_deg_array)
+def f_array(x_rad_array2:np.ndarray) -> np.ndarray:
+    return np.cos(x_rad_array2)
 
 
 @pytest.fixture
-def delta_x_rad(x_rad_array:np.ndarray) -> float:
-    return x_rad_array[1] - x_rad_array[0]
+def c_table(f_array:np.ndarray) -> TABLE:
+    return {
+        '0': f_array[:-1],
+        '1': np.array((1, 1)) @ np.vstack((f_array[:-1], f_array[1:])),
+        '2': np.array((1, 4, 1)) @ np.vstack((f_array[:-1:2], f_array[1::2], f_array[2::2])),
+    }
+
+
+@pytest.fixture
+def delta_x_rad(x_rad_array2:np.ndarray) -> float:
+    return x_rad_array2[1] - x_rad_array2[0]
 
 
 @pytest.fixture(params=[main.int_cos_0, main.int_cos_1, main.int_cos_2])
@@ -91,6 +101,16 @@ def int_method(request):
 @pytest.fixture
 def method_number(int_method:METHOD) -> str:
     return int_method.__name__[-1]
+
+
+@pytest.fixture
+def c_array(c_table:TABLE, method_number:str) -> np.array:
+    return c_table[method_number]
+
+
+@pytest.fixture
+def division(method_number:np.ndarray, delta_x_rad:float) -> float:
+    return (int(method_number) + 1) / delta_x_rad
 
 
 @pytest.fixture
@@ -106,7 +126,19 @@ def test_result_type(result_dict:RESULT,):
     )
 
 
-@pytest.mark.parametrize("dict_key_prefix", ["a_array", "area"])
+@pytest.fixture(params=["a_array", "area"])
+def dict_key_prefix(request) -> str:
+    return request.param
+
+
+@pytest.fixture
+def dict_value_type(dict_key_prefix) -> type:
+    return {
+        "a_array": np.ndarray,
+        "area": float,
+    }[dict_key_prefix]
+
+
 def test_result_has_key(result_dict:RESULT, dict_key_prefix:str, method_number:str,):
     dict_key = '_'.join((dict_key_prefix, method_number))
 
@@ -118,52 +150,75 @@ def test_result_has_key(result_dict:RESULT, dict_key_prefix:str, method_number:s
 
 
 @pytest.fixture
-def result_a_array_0(result_dict_0:RESULT) -> np.ndarray:
-    return result_dict_0['a_array_0']
+def result_a_array(result_dict:RESULT, method_number:str) -> np.ndarray:
+    return result_dict[f'a_array_{method_number}']
 
 
 @pytest.fixture
-def result_area_0(result_dict_0:RESULT) -> float:
-    return result_dict_0['area_0']
+def result_area(result_dict:RESULT, method_number:str) -> float:
+    return result_dict[f'area_{method_number}']
 
 
-def test_rect_type(result_a_array_0:np.ndarray):
-    assert isinstance(result_a_array_0, np.ndarray), (
-        "returned result 'a_array_0' is not an instance of `np.ndarray`\n"
-        "반환된 결과 'a_array_0' 가 `np.ndarray`가 아님\n"
-        f"{result_a_array_0}"
+def test_a_array_type(result_a_array:np.ndarray, method_number:str):
+    dict_key = '_'.join(('a_array', method_number))
+
+    assert isinstance(result_a_array, np.ndarray,), (
+        f"returned result '{dict_key}' is not an instance of `np.ndarray`\n"
+        f"반환된 결과 '{dict_key}' 가 `np.ndarray`가 아님\n"
+        f"{result_a_array}"
     )
 
 
-def test_area_0_type(result_area_0:float):
-    assert isinstance(result_area_0, float), (
-        "returned result 'area_0' is not an instance of `float`\n"
-        "반환된 결과 'area_0'가 `float`가 아님\n"
-        f"{result_area_0}"
+def test_a_array_dim(result_a_array:np.ndarray, method_number:str, n_rect:int):
+    dict_key = '_'.join(('a_array', method_number))
+
+    if method_number in '01':
+        expected_len = n_rect
+    elif method_number == '2':
+        expected_len = n_rect // 2
+    else:
+        raise NotImplementedError
+
+    msg = (
+        f"returned result '{dict_key}' has {len(result_a_array)} areas. expected {expected_len}\n"
+        f"반환된 결과 '{dict_key}' 에 {len(result_a_array)} 개의 넓이가 저장됨. 예상 갯수 {expected_len}\n"
+        f"{result_a_array}"
+    )
+
+    assert len(result_a_array) == (expected_len), msg
+
+
+def test_area_type(result_area:float, method_number:str):
+    dict_key = '_'.join(('area', method_number))
+
+    assert isinstance(result_area, float), (
+        f"returned result '{dict_key}' is not an instance of `float`\n"
+        f"반환된 결과 '{dict_key}'가 `float`가 아님\n"
+        f"{result_area}"
     )
 
 
-def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float, x1_deg:int, x2_deg:int,):
-    q = result_a_array_0 * (1.0/delta_x_rad)
-    expected_q = np.cos(x_rad_array)
+def test_a_array_value(method_number:str, result_a_array:np.ndarray, c_array:np.array, division:float, x1_deg:int, x2_deg:int, n_rect:int):
+    q = result_a_array * division
+
     nt.assert_allclose(
-        q, expected_q,
+        actual=q, desired=c_array,
         err_msg=(
-            f'please verify the area of the rectangles\n'
-            f'직사각형 넓이 계산을 확인 바랍니다\n'
-            f'({x1_deg} deg ~ {x2_deg} deg)'
+            f'int_cos_{method_number}(): please verify the area of at each coordinate\n'
+            f'int_cos_{method_number}(): 각각의 좌표값에서 넓이 계산을 확인 바랍니다\n'
+            f'({x1_deg} deg ~ {x2_deg} deg, {n_rect} areas)'
         )
     )
 
 
-def test_area_0_value(result_area_0:float, delta_x_rad:float, x_rad_array:np.ndarray):
-    q = result_area_0 * (1.0/delta_x_rad)
-    expected_qq = np.cos(x_rad_array)
-    expected_q = np.sum(expected_qq)
+def test_area_value(method_number:str, result_area:float, c_array:np.array, division:float, x1_deg:int, x2_deg:int, n_rect:int):
+    q = result_area * division
+    expected_q = np.sum(c_array)
+
     assert math.isclose(q, expected_q), (
-        "please verify numerical integration result\n"
-        "적분 결과를 확인 바랍니다\n"
-        f"({x1_deg} deg ~ {x2_deg} deg) result = {result_area_0}"
+        f"int_cos_{method_number}(): please verify numerical integration result\n"
+        f"int_cos_{method_number}(): 적분 결과를 확인 바랍니다\n"
+        f"({x1_deg} deg ~ {x2_deg} deg, {n_rect} areas) result = {result_area}"
     )
 
 
@@ -212,21 +267,26 @@ def test_compare_int_cos_type(result_compare_int_cos:RESULT):
 
 
 @pytest.fixture
-def result_compare_numint(result_compare_int_cos:RESULT) -> float:
-    return result_compare_int_cos['area_0']
+def area_key(method_number:str) -> str:
+    return 'area_' + method_number
 
 
-def test_compare_int_cos__numint_type(result_compare_numint:float):
+@pytest.fixture
+def result_compare_numint(result_compare_int_cos:RESULT, area_key:str) -> float:
+    return result_compare_int_cos[area_key]
+
+
+def test_compare_int_cos__numint_type(result_compare_numint:float, area_key:str):
     assert isinstance(result_compare_numint, float), (
-        f"returned result 'area_0' ({result_compare_numint}) is not an instance of `float`\n"
-        f"반환된 결과 'area_exact' ({result_compare_numint}) 가 `float`가 아님"
+        f"returned result '{area_key}' ({result_compare_numint}) is not an instance of `float`\n"
+        f"반환된 결과 '{area_key}' ({result_compare_numint}) 가 `float`가 아님"
     )
 
 
-def test_compare_int_cos__numint(result_compare_numint:float, result_area_0:float):
-    assert result_compare_numint == result_area_0, (
-        f"'area_0' of compare_int_cos() ({result_compare_numint}) is not same as int_cos_0() ({result_area_0}) \n"
-        f"compare_int_cos() 가 반환된 결과 'area_exact' ({result_compare_numint}) 가 int_cos_0() 반환 결과 ({result_area_0}) 와 다름"
+def test_compare_int_cos__numint(result_compare_numint:float, result_area:float, method_number:str, area_key:str):
+    assert result_compare_numint == result_area, (
+        f"'{area_key}' of compare_int_cos() ({result_compare_numint}) is not same as int_cos_{method_number}() ({result_area}) \n"
+        f"compare_int_cos() 가 반환된 결과 'area_exact' ({result_compare_numint}) 가 int_cos_{method_number}() 반환 결과 ({result_area}) 와 다름"
     )
 
 
@@ -257,22 +317,32 @@ def test_compare_int_cos_area_exact(x1_deg:int, x2_deg:int, result_area_exact:fl
 
 
 @pytest.fixture
-def result_diff(result_compare_int_cos:RESULT) -> float:
-    return result_compare_int_cos['diff_0']
+def diff_key(method_number:str) -> str:
+    return 'diff_' + method_number
 
 
-def test_result_diff_type(result_diff:float):
-    assert isinstance(result_diff, float), "returned result 'diff_0' is not an instance of `float`\n반환된 결과 'diff_0'가 `float`가 아님"
+@pytest.fixture
+def result_diff(result_compare_int_cos:RESULT, diff_key:str) -> float:
+    return result_compare_int_cos[diff_key]
+
+
+def test_result_diff_type(result_diff:float, result_area_exact:float, diff_key:str):
+    assert isinstance(result_diff, float), f"returned result '{diff_key}' is not an instance of `float`\n반환된 결과 '{diff_key}'가 `float`가 아님"
 
     assert result_diff >= 0, (
-        f"returned result 'diff_0' {result_diff} is supposed to be an absolute value.\n"
-        f"반환된 결과 'diff_0' {result_diff} 는 절대값이어야 함."
+        f"returned result '{diff_key}' {result_diff} is supposed to be an absolute value.\n"
+        f"반환된 결과 ' {result_area_exact} = {diff_key}' {result_diff} 는 절대값이어야 함."
     )
 
 
 @pytest.fixture
-def result_is_close(result_compare_int_cos:RESULT) -> bool:
-    return result_compare_int_cos['is_close_0']
+def is_close_key(method_number:str) -> str:
+    return 'is_close_' + method_number
+
+
+@pytest.fixture
+def result_is_close(result_compare_int_cos:RESULT, is_close_key:str) -> bool:
+    return result_compare_int_cos[is_close_key]
 
 
 def test_result_is_close_type(result_is_close:bool):
@@ -282,37 +352,29 @@ def test_result_is_close_type(result_is_close:bool):
     )
 
 
-@pytest.fixture
-def expected_diff_div_delta_x(expected_exact_int:float, delta_x_rad:float, x_rad_array:np.ndarray) -> float:
-    # diff_0 = exact - numerical
-    # diff_0 / delta_x = exact / delta_x - numerical / delta_x
-    expected_exact_int_div_delta_x = expected_exact_int / delta_x_rad
-    expected_qq = np.cos(x_rad_array)
-    expected_q = np.sum(expected_qq)
-
-    return abs(expected_exact_int_div_delta_x - expected_q)
-
-
 def test_compare_int_cos_diff(
         result_diff:float,
-        expected_diff_div_delta_x:float,
-        delta_x_rad:float,
+        expected_exact_int:float,
+        c_array:np.array,
+        division:float,
+        diff_key:str,
     ):
 
-    expected_diff = expected_diff_div_delta_x * delta_x_rad
+    expected_diff = abs(expected_exact_int - (c_array.sum() / division))
 
-    assert math.isclose(result_diff, expected_diff), (
-        f"please verify `diff_0` (result : {result_diff}, expected : {expected_diff}).\n"
-        f"`diff_0` 값을 확인 바람. (반환된 값 : {result_diff}, 예상된 값 : {expected_diff})"
+    assert math.isclose(result_diff, expected_diff, rel_tol=0.001), (
+        f"please verify `{diff_key}` (result : {result_diff}, expected : {expected_diff}).\n"
+        f"`{diff_key}` 값을 확인 바람. (반환된 값 : abs({result_compare_numint} - {result_area_exact})  = {result_diff}, 예상된 값 : abs({(c_array.sum() / division)} - {expected_exact_int})= {expected_diff})"
     )
 
 
 def test_compare_int_cos_is_close(
-        epsilon:float, result_diff:float, result_is_close:bool
-    ):
-    b_is_close = result_diff < epsilon
+        epsilon:float, result_diff:float, result_is_close:bool, is_close_key:str):
+    b_is_close = (result_diff < epsilon)
     assert result_is_close == b_is_close, (
-        "please verify the comparison result\n비교 결과를 확인 바랍니다"
+        "please verify the comparison result\n"
+        "비교 결과를 확인 바랍니다\n"
+        f"{result_diff} < {epsilon} ?"
     )
 
 
