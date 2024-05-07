@@ -113,5 +113,22 @@ def test_area_0_value(result_area_0:float, delta_x_rad:float, x_rad_array:np.nda
     assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
 
 
+@pytest.fixture
+def expected_exact_int(x1_rad:float, x2_rad:float) -> float:
+    return np.sin(x2_rad) - np.sin(x1_rad)
+
+
+@pytest.fixture
+def result_exact_int(x1_rad:float, x2_rad:float) -> float:
+    return main.exact_int_cos(x1_rad, x2_rad)
+
+
+def test_exact_int_cos(x1_deg:int, x2_deg:int, result_exact_int:float, expected_exact_int:float):
+    assert math.isclose(result_exact_int, expected_exact_int), (
+        f"please verify exact integration result.({x1_deg:d}deg~{x2_deg:d}deg)\n"
+        f"정적분 이론값 확인 바랍니다.({x1_deg:d}deg~{x2_deg:d}deg)"
+    )
+
+
 if "__main__" == __name__:
     pytest.main([__file__])
