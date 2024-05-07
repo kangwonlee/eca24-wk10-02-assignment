@@ -87,7 +87,7 @@ def result_dict_0(x1_rad, x2_rad, n_rect) -> RESULT:
     return main.int_cos_0(x1_rad, x2_rad, n_rect)
 
 
-def test_result_type(result_dict_0:RESULT):
+def test_result_0_type(result_dict_0:RESULT):
     assert isinstance(result_dict_0, dict), (
         "returned result is not a `dict`\n"
         "반환된 결과가 `dict`가 아님\n"
