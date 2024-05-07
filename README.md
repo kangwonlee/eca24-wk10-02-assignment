@@ -7,8 +7,17 @@
 
 ## Implementation<br>구현
 
-* Implement `int_cos_0()` function in `main.py` file.<br>`int_cos_0()` 함수를 `main.py` 파일에 구현하시오.
+* Implement following functions in `main.py` file.<br>다음 함수를 `main.py` 파일에 구현하시오.
+
+| function<br>함수 | description<br>설명 |
+|:----------------:|:------------------:|
+| `int_cos_0()` | calculate definite integral of $cos \theta$ using numerical integration of 0th order<br>0차 수치 적분을 사용하여 $cos \theta$의 정적분을 계산 |
+| `exact_int_cos()` | calculate exact definite integral of $cos \theta$<br>$cos \theta$의 정적분의 이론값을 계산 |
+
 * Please see `sample.py` file for an example.<br>사용 예에 대해서는 `sample.py` 파일을 참고하시오.
+* In `main.py` file, every python code line must belong to one of functions.<br>`main.py` 파일에서 모든 파이썬 코드 라인은 반드시 함수 중 하나에 속해야 함.
+
+### 0th order integration<br>0차 적분
 * Function `int_cos_0()` has three argument : `theta_rad_begin`, `theta_rad_end`, and `n`.<br>함수 `int_cos_0()` 의 매개변수는 `theta_begin`, `theta_end`, 그리고 `n` 이다.
 
 | argument<br>매개변수 | type<br>형 | unit<br>단위 | description<br>설명 |
@@ -23,3 +32,24 @@
 |:-----------------:|:----------:|:----------:|:------------------:|
 | `'a_array_0'` | `numpy` array | - | the `n` areas of rectangles of 0th order integration<br>0차 적분의 `n`개의 직사각형의 넓이 |
 | `'area_0'` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
+
+### Exact integration<br>정적분 이론값
+* Function `exact_int_cos()` has two argument : `theta_rad_begin` and `theta_rad_end`.<br>함수 `exact_int_cos()` 의 매개변수는 `theta_rad_begin` 그리고 `theta_rad_end` 이다.
+
+| argument<br>매개변수 | type<br>형 | unit<br>단위 | description<br>설명 |
+|:-----------------:|:----------:|:----------:|:------------------:|
+| `theta_rad_begin` | `float` | rad | lower bound of the integral<br>적분구간의 하한 |
+| `theta_rad_end` | `float` | rad | upper bound of the integral<br>적분구간의 상한 |
+
+* Please return the exact definite integral of $cos \theta$ in `float`.<br>정적분의 이론값을 `float`로 반환하시오.
+
+## Example<br>예
+
+```python
+theta_rad_begin = 0.0
+theta_rad_end = np.pi / 2
+n = 100
+
+print(int_cos_0(theta_rad_begin, theta_rad_end, n))
+print(exact_int_cos(theta_rad_begin, theta_rad_end))
+```
