@@ -14,14 +14,14 @@ def sample_main():
     x_deg_array = np.arange(x1_deg, x2_deg, delta_x)
     x_rad_array = np.deg2rad(x_deg_array)
 
-    d = main.int_sin_0(x_rad_array)
+    result_0 = main.int_sin_0(x_rad_array)
 
     i = random.randint(0, len(x_deg_array)-1)
     x_i = x_deg_array[i]
-    rect_i = d['a_array'][i]
+    rect_i = result_0['a_array'][i]
     print(f"area at x = {x_i} deg is {rect_i}")
 
-    print(f"numerical integration result is {d['area']}")
+    print(f"numerical integration result is {result_0['area']}")
 
 
 if "__main__" == __name__:
