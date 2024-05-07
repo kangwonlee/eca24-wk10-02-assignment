@@ -7,3 +7,11 @@ def int_cos_0(
 
 
 def exact_int_cos(
+
+
+
+
+def compare_int_cos(
+
+
+
