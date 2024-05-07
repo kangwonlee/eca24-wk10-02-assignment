@@ -93,11 +93,19 @@ def result_area_0(result_dict:RESULT) -> float:
 
 
 def test_rect_type(result_a_array_0:np.ndarray):
-    assert isinstance(result_a_array_0, np.ndarray), "returned result 'a_array_0' is not an instance of `np.ndarray`\n반환된 결과 'a_array_0' 가 `np.ndarray`가 아님"
+    assert isinstance(result_a_array_0, np.ndarray), (
+        "returned result 'a_array_0' is not an instance of `np.ndarray`\n"
+        "반환된 결과 'a_array_0' 가 `np.ndarray`가 아님\n"
+        f"{result_a_array_0}"
+    )
 
 
 def test_area_0_type(result_area_0:float):
-    assert isinstance(result_area_0, float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
+    assert isinstance(result_area_0, float), (
+        "returned result 'area_0' is not an instance of `float`\n"
+        "반환된 결과 'area_0'가 `float`가 아님\n"
+        f"{result_area_0}"
+    )
 
 
 def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float):
