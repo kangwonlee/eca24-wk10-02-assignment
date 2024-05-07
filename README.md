@@ -15,9 +15,9 @@
 |:-----------------:|:----------:|:----------:|:------------------:|
 | `x_array` | `numpy` array | rad | coordinates of `x` to calculate sin function<br>sin 값을 계산할 `x` 좌표 |
 
-* Please return a `numpy` array containing the area of each rectangle of 0th order integration, the sum of all rectangles as the numerical integration in `float`.<br>0차 적분의 각 직사각형의 넓이를 담은 배열과 해당 직사각형의 넓이의 합을 `float`로 반환하시오.
+* Please return a `dict` containing `numpy` array of the area of each rectangle of 0th order integration and the sum of all rectangles as the numerical integration in `float`.<br>`dict`를 반환하시오. value 로 0차 적분의 각 직사각형의 넓이를 담은 배열과 해당 직사각형의 넓이의 합을 `float`로 담으시오.
 
-| argument<br>매개변수 | type<br>형 | unit<br>단위 | description<br>설명 |
+| key (str)<br>키 (문자열) | type of value<br>value 의 형 | unit<br>단위 | description<br>설명 |
 |:-----------------:|:----------:|:----------:|:------------------:|
-| `a_array` | `numpy` array | - | the area of each rectangle of 0th order integration at `x_array`<br>`x_array`에서의 0차 적분의 각 직사각형의 넓이 |
-| `area` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
+| `'a_array'` | `numpy` array | - | the area of each rectangle of 0th order integration at `x_array`<br>`x_array`에서의 0차 적분의 각 직사각형의 넓이 |
+| `'area'` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
