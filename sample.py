@@ -18,7 +18,7 @@ def sample_main():
 
     i = random.randint(0, len(x_deg_array)-1)
     x_i = x_deg_array[i]
-    rect_i = result_0['a_array'][i]
+    rect_i = result_0['a_array_0'][i]
     print(f"area at x = {x_i} deg is {rect_i}")
 
     print(f"numerical integration result is {result_0['area']}")

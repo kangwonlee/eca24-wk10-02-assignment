@@ -58,8 +58,8 @@ def result_dict(x_rad_array) -> RESULT:
 
 
 @pytest.fixture
-def result_a_array(result_dict:RESULT) -> nd.ndarray:
-    return result_dict['a_array']
+def result_a_array_0(result_dict:RESULT) -> nd.ndarray:
+    return result_dict['a_array_0']
 
 
 @pytest.fixture
@@ -70,20 +70,20 @@ def result_area(result_dict:RESULT) -> float:
 def test_result_type(result_dict:RESULT):
     assert isinstance(result_dict, dict), "returned result is not a `dict`\n반환된 결과가 `dict`가 아님"
 
-    assert 'a_array' in result_dict, "returned result does not have `a_array`\n반환값에 `a_array`가 없음"
+    assert 'a_array_0' in result_dict, "returned result does not have `a_array_0`\n반환값에 `a_array_0`가 없음"
     assert 'area' in result_dict, "returned result does not have `area`\n반환값에 `area`가 없음"
 
 
-def test_rect_type(result_a_array:nd.ndarray):
-    assert isinstance(result_a_array, nd.ndarray), "returned result is not a `nd.ndarray`\n반환된 결과가 `nd.ndarray`가 아님"
+def test_rect_type(result_a_array_0:nd.ndarray):
+    assert isinstance(result_a_array_0, nd.ndarray), "returned result is not a `nd.ndarray`\n반환된 결과가 `nd.ndarray`가 아님"
 
 
 def test_area_type(result_area:float):
     assert isinstance(result_area, float), "returned result is not a `float`\n반환된 결과가 `float`가 아님"
 
 
-def test_rect_value(result_a_array:nd.ndarray, x_rad_array:nd.array, delta_x:float):
-    q = result_a_array * (1.0/delta_x)
+def test_rect_value(result_a_array_0:nd.ndarray, x_rad_array:nd.array, delta_x:float):
+    q = result_a_array_0 * (1.0/delta_x)
     expected_q = np.sin(x_rad_array)
     np.assert_allclose(q, expected_q)
 

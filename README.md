@@ -19,5 +19,5 @@
 
 | key (str)<br>키 (문자열) | type of value<br>value 의 형 | unit<br>단위 | description<br>설명 |
 |:-----------------:|:----------:|:----------:|:------------------:|
-| `'a_array'` | `numpy` array | - | the area of each rectangle of 0th order integration at `x_array`<br>`x_array`에서의 0차 적분의 각 직사각형의 넓이 |
+| `'a_array_0'` | `numpy` array | - | the area of each rectangle of 0th order integration at `x_array`<br>`x_array`에서의 0차 적분의 각 직사각형의 넓이 |
 | `'area'` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
