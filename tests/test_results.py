@@ -85,7 +85,7 @@ def test_area_0_type(result_area_0:float):
 def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x:float):
     q = result_a_array_0 * (1.0/delta_x)
     expected_q = np.sin(x_rad_array)
-    np.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
+    nt.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
 
 
 def test_area_0_value(result_area_0:float, delta_x:float):
