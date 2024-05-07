@@ -119,17 +119,6 @@ def expected_exact_int(x1_rad:float, x2_rad:float) -> float:
 
 
 @pytest.fixture
-def result_exact_int(x1_rad:float, x2_rad:float) -> float:
-    return main.exact_int_cos(x1_rad, x2_rad)
-
-
-def test_exact_int_cos(x1_deg:int, x2_deg:int, result_exact_int:float, expected_exact_int:float):
-    assert math.isclose(result_exact_int, expected_exact_int), (
-        f"please verify exact integration result.({x1_deg:d}deg~{x2_deg:d}deg)\n"
-        f"정적분 이론값 확인 바랍니다.({x1_deg:d}deg~{x2_deg:d}deg)"
-    )
-
-@pytest.fixture
 def epsilon() -> float:
     return 1e-5
 
@@ -156,9 +145,10 @@ def result_area_exact(result_compare_int_cos:RESULT) -> float:
     return result_compare_int_cos['area_exact']
 
 
-def test_compare_int_cos_area_exact(result_area_exact:float, expected_exact_int:float):
+def test_compare_int_cos_area_exact(x1_deg:int, x2_deg:int, result_area_exact:float, expected_exact_int:float):
     assert math.isclose(result_area_exact, expected_exact_int), (
-        "please verify exact integration result\n정적분 이론값 확인 바랍니다"
+        f"please verify exact integration result ({x1_deg:d}deg~{x2_deg:d}deg returned : {result_area_exact:f}, expected : {expected_exact_int:f})\n"
+        f"정적분 이론값 확인 바랍니다  ({x1_deg:d}deg~{x2_deg:d}deg 반환값 : {result_area_exact:f}, 예상값 : {expected_exact_int:f})"
     )
 
 

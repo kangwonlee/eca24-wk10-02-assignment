@@ -12,7 +12,6 @@
 | function<br>함수 | description<br>설명 |
 |:----------------:|:------------------:|
 | `int_cos_0()` | calculate definite integral of $cos \theta$ using numerical integration of 0th order<br>0차 수치 적분을 사용하여 $cos \theta$의 정적분을 계산 |
-| `exact_int_cos()` | calculate exact definite integral of $cos \theta$<br>$cos \theta$의 정적분의 이론값을 계산 |
 | `compare_int_cos()` | compare the numerical integration and the exact integration of $cos \theta`<br>$cos \theta$의 수치 적분과 정적분을 비교 |
 
 * Please see `sample.py` file for an example.<br>사용 예에 대해서는 `sample.py` 파일을 참고하시오.
@@ -33,16 +32,6 @@
 |:-----------------:|:----------:|:----------:|:------------------:|
 | `'a_array_0'` | `numpy` array | - | the `n` areas of rectangles of 0th order integration<br>0차 적분의 `n`개의 직사각형의 넓이 |
 | `'area_0'` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
-
-### Exact integration<br>정적분 이론값
-* Function `exact_int_cos()` has two argument : `theta_rad_begin` and `theta_rad_end`.<br>함수 `exact_int_cos()` 의 매개변수는 `theta_rad_begin` 그리고 `theta_rad_end` 이다.
-
-| argument<br>매개변수 | type<br>형 | unit<br>단위 | description<br>설명 |
-|:-----------------:|:----------:|:----------:|:------------------:|
-| `theta_rad_begin` | `float` | rad | lower bound of the integral<br>적분구간의 하한 |
-| `theta_rad_end` | `float` | rad | upper bound of the integral<br>적분구간의 상한 |
-
-* Please return the exact definite integral of $cos \theta$ in `float`.<br>정적분의 이론값을 `float`로 반환하시오.
 
 ### Compare<br>비교
 * Function `compare_int_cos()` has three argument : `theta_rad_begin`, `theta_rad_end`, `n`, and `epsilon`.<br>함수 `compare_int_cos()` 의 매개변수는 `theta_rad_begin`, `theta_rad_end`, `n`, 그리고 `epsilon` 이다.
@@ -72,7 +61,6 @@ theta_rad_end = np.pi / 2
 n = 100
 
 print(int_cos_0(theta_rad_begin, theta_rad_end, n))
-print(exact_int_cos(theta_rad_begin, theta_rad_end))
 
 epsilon = 1e-6
 print(compare_int_cos(theta_rad_begin, theta_rad_end, n, epsilon))
