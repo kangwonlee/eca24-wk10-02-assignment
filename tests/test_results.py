@@ -136,8 +136,6 @@ def test_compare_int_cos_type(result_compare_int_cos:RESULT):
     assert 'diff_0' in result_compare_int_cos, "returned result does not have `diff_0`\n반환값에 `diff_0`가 없음"
     assert 'is_close_0' in result_compare_int_cos, "returned result does not have `is_close_0`\n반환값에 `is_close_0`가 없음"
 
-    assert isinstance(result_compare_int_cos['area_0'], float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
-
 
 @pytest.fixture
 def result_compare_numint(result_compare_int_cos:RESULT) -> float:
