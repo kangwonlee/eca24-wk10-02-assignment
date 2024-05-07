@@ -134,7 +134,7 @@ def test_compare_int_cos_type(result_compare_int_cos:RESULT):
     assert 'area_0' in result_compare_int_cos, "returned result does not have `area_0`\n반환값에 `area_0`가 없음"
     assert 'area_exact' in result_compare_int_cos, "returned result does not have `area_exact`\n반환값에 `area_exact`가 없음"
     assert 'diff_0' in result_compare_int_cos, "returned result does not have `diff_0`\n반환값에 `diff_0`가 없음"
-    assert 'is_close' in result_compare_int_cos, "returned result does not have `is_close`\n반환값에 `is_close`가 없음"
+    assert 'is_close_0' in result_compare_int_cos, "returned result does not have `is_close_0`\n반환값에 `is_close_0`가 없음"
 
     assert isinstance(result_compare_int_cos['area_0'], float), "returned result 'area_0' is not an instance of `float`\n반환된 결과 'area_0'가 `float`가 아님"
 
@@ -200,13 +200,13 @@ def test_result_diff_type(result_diff:float):
 
 @pytest.fixture
 def result_is_close(result_compare_int_cos:RESULT) -> bool:
-    return result_compare_int_cos['is_close']
+    return result_compare_int_cos['is_close_0']
 
 
 def test_result_is_close_type(result_is_close:bool):
     assert isinstance(result_is_close, (np.bool_, bool)), (
-        f"returned result 'is_close' ({result_is_close}) is not an instance of `bool` ({type(result_is_close)}).\n"
-        f"반환된 결과 'is_close' ({result_is_close})가 `bool`가 아님 ({type(result_is_close)})."
+        f"returned result 'is_close_0' ({result_is_close}) is not an instance of `bool` ({type(result_is_close)}).\n"
+        f"반환된 결과 'is_close_0' ({result_is_close})가 `bool`가 아님 ({type(result_is_close)})."
     )
 
 

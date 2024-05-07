@@ -50,7 +50,7 @@
 | `'area_0'` | `float` | - | the numerical integration<br>해당 수치 적분 값 |
 | `'area_exact'` | `float` | - | the exact integration<br>해당 정적분 값 |
 | `'diff_0'` | `float` | - | the absolute value of the difference between the two integrations<br>두 적분의 차이의 절대값 |
-| `'is_close'` | `bool` | - | whether the absolute value is smaller than `epsilon`<br>절대값이 `epsilon` 보다 작은지 여부
+| `'is_close_0'` | `bool` | - | whether the absolute value is smaller than `epsilon`<br>절대값이 `epsilon` 보다 작은지 여부
 
 
 ## Example<br>예
