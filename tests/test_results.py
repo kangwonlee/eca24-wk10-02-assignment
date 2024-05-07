@@ -148,12 +148,32 @@ def result_compare_int_cos(x1_rad:float, x2_rad:float, n_rect:int, epsilon:float
 
 
 def test_compare_int_cos_type(result_compare_int_cos:RESULT):
-    assert isinstance(result_compare_int_cos, dict), "returned result is not a `dict`\n반환된 결과가 `dict`가 아님"
+    assert isinstance(result_compare_int_cos, dict), (
+        "returned result is not a `dict`\n"
+        "반환된 결과가 `dict`가 아님\n"
+        f"{result_compare_int_cos}"
+    )
 
-    assert 'area_0' in result_compare_int_cos, "returned result does not have `area_0`\n반환값에 `area_0`가 없음"
-    assert 'area_exact' in result_compare_int_cos, "returned result does not have `area_exact`\n반환값에 `area_exact`가 없음"
-    assert 'diff_0' in result_compare_int_cos, "returned result does not have `diff_0`\n반환값에 `diff_0`가 없음"
-    assert 'is_close_0' in result_compare_int_cos, "returned result does not have `is_close_0`\n반환값에 `is_close_0`가 없음"
+    assert 'area_0' in result_compare_int_cos, (
+        "returned result does not have `area_0`\n"
+        "반환값에 `area_0`가 없음\n"
+        f"{result_compare_int_cos}"
+    )
+    assert 'area_exact' in result_compare_int_cos, (
+        "returned result does not have `area_exact`\n"
+        "반환값에 `area_exact`가 없음\n"
+        f"{result_compare_int_cos}"
+    )
+    assert 'diff_0' in result_compare_int_cos, (
+        "returned result does not have `diff_0`\n"
+        "반환값에 `diff_0`가 없음\n"
+        f"{result_compare_int_cos}"
+    )
+    assert 'is_close_0' in result_compare_int_cos, (
+        "returned result does not have `is_close_0`\n"
+        "반환값에 `is_close_0`가 없음\n"
+        f"{result_compare_int_cos}"
+    )
 
 
 @pytest.fixture
