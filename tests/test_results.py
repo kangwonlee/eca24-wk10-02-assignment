@@ -108,17 +108,28 @@ def test_area_0_type(result_area_0:float):
     )
 
 
-def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float):
+def test_rect_value(result_a_array_0:np.ndarray, x_rad_array:np.array, delta_x_rad:float, x1_deg:int, x2_deg:int,):
     q = result_a_array_0 * (1.0/delta_x_rad)
     expected_q = np.cos(x_rad_array)
-    nt.assert_allclose(q, expected_q, err_msg='please verify the area of the rectangles<br>직사각형 넓이 계산을 확인 바랍니다')
+    nt.assert_allclose(
+        q, expected_q,
+        err_msg=(
+            f'please verify the area of the rectangles\n'
+            f'직사각형 넓이 계산을 확인 바랍니다\n'
+            f'({x1_deg} deg ~ {x2_deg} deg)'
+        )
+    )
 
 
 def test_area_0_value(result_area_0:float, delta_x_rad:float, x_rad_array:np.ndarray):
     q = result_area_0 * (1.0/delta_x_rad)
     expected_qq = np.cos(x_rad_array)
     expected_q = np.sum(expected_qq)
-    assert math.isclose(q, expected_q), "please verify numerical integration result\n적분 결과를 확인 바랍니다"
+    assert math.isclose(q, expected_q), (
+        "please verify numerical integration result\n"
+        "적분 결과를 확인 바랍니다\n"
+        f"({x1_deg} deg ~ {x2_deg} deg) result = {result_area_0}"
+    )
 
 
 @pytest.fixture
