@@ -8,7 +8,7 @@
 
 ## Implementation<br>구현
 
-* Implement following functions in `main.py` file.<br>다음 함수를 `main.py` 파일에 구현하시오.
+* Implement following functions in `exercise.py` file.<br>다음 함수를 `exercise.py` 파일에 구현하시오.
 
 | function<br>함수 | description<br>설명 |
 |:----------------:|:------------------:|
@@ -18,7 +18,7 @@
 | `compare_int_cos()` | compare the numerical integration and the exact integration of $cos \theta`<br>$cos \theta$의 수치 적분과 정적분을 비교 |
 
 * Please see `sample.py` file for an example.<br>사용 예에 대해서는 `sample.py` 파일을 참고하시오.
-* In `main.py` file, every python code line must belong to one of functions.<br>`main.py` 파일에서 모든 파이썬 코드 라인은 반드시 함수 중 하나에 속해야 함.
+* In `exercise.py` file, every python code line must belong to one of functions.<br>`exercise.py` 파일에서 모든 파이썬 코드 라인은 반드시 함수 중 하나에 속해야 함.
 
 ### 0th order integration<br>0차 적분
 * Function `int_cos_0()` has three argument : `theta_rad_begin`, `theta_rad_end`, and `n`.<br>함수 `int_cos_0()` 의 매개변수는 `theta_begin`, `theta_end`, 그리고 `n` 이다.
